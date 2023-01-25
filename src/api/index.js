@@ -6,12 +6,6 @@ const customFetch = async(url, {body, ...customConfig}) => {
   // Storing the authentication (Bearer) token in localstorage  
   const token = window.localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
 
-  // if token exists we assign it so that posts requests run smoothly
-  if(token){
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  
   const headers = {
     'content-type': 'application/json',
     Accept: 'application/json'
@@ -28,6 +22,10 @@ const customFetch = async(url, {body, ...customConfig}) => {
   }
 
 
+  // if token exists we assign it so that posts requests run smoothly
+  if(token){
+    headers.Authorization = `Bearer ${token}`;
+  }
 
   //if there is a body then we change it to string form and send it
   if(body){
@@ -51,11 +49,11 @@ const customFetch = async(url, {body, ...customConfig}) => {
 
       //  if the request from API fails then throw the error with the message from the API
         throw new Error(data.message);
-    }catch(err){
+    }catch(error){
         console.error('error');
         //when fetch from API fails we return message sent by the API as an error message
         return{
-            message: err.message,
+            message: error.message,
             success: false // also we mark the success key false
         }
     }
@@ -66,4 +64,11 @@ export const getPosts = (page = 1, limit = 5)=> {
     return customFetch(API_URLS.posts(page, limit),{
         method: 'GET'
     });
+};
+
+export const login = (email, password) => {
+  return customFetch(API_URLS.login(), {
+    method: 'POST',
+    body: { email, password },
+  });
 };

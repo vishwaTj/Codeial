@@ -1,16 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './styles/index.css'
-import App from './components/App';
+import ReactDOM from 'react-dom';
+// import { ToastProvider } from 'react-toast-notification';
+import { toast } from 'react-toast-notification';
+import './styles/index.css';
+import { App } from './components';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
+  
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    {/* // ToastProvider will be using the context APi so we wrap it arroud App */}
+    {/* Context API is nothing but pop up messages used by Toast provider */}
+      <App />
+
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 
